@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qphone.dao.CrowdMapper">
+  <resultMap id="BaseResultMap" type="com.qphone.pojo.Crowd">
+    <id column="CROWD_ID" jdbcType="DECIMAL" property="crowdId" />
+    <result column="CROWD_NAME" jdbcType="VARCHAR" property="crowdName" />
+    <result column="CROWD_ZJ" jdbcType="VARCHAR" property="crowdZj" />
+    <result column="CROWD_CJ" jdbcType="VARCHAR" property="crowdCj" />
+    <result column="CROWD_TIME" jdbcType="DATE" property="crowdTime" />
+    <result column="CROWD_DC" jdbcType="VARCHAR" property="crowdDc" />
+    <result column="CROWD_MS" jdbcType="VARCHAR" property="crowdMs" />
+    <result column="CROWD_TT" jdbcType="VARCHAR" property="crowdTt" />
+    <result column="CROWD_XX" jdbcType="VARCHAR" property="crowdXx" />
+    <result column="CROWD_FQ" jdbcType="VARCHAR" property="crowdFq" />
+    <result column="CROWD_JS" jdbcType="VARCHAR" property="crowdJs" />
+    <result column="CROWD_PHOTO" jdbcType="VARCHAR" property="crowdPhoto" />
+    <result column="CROWD_TEL" jdbcType="VARCHAR" property="crowdTel" />
+    <result column="CROWD_ZH" jdbcType="VARCHAR" property="crowdZh" />
+    <result column="CROWD_SF" jdbcType="VARCHAR" property="crowdSf" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    CROWD_ID, CROWD_NAME, CROWD_ZJ, CROWD_CJ, CROWD_TIME, CROWD_DC, CROWD_MS, CROWD_TT, 
+    CROWD_XX, CROWD_FQ, CROWD_JS, CROWD_PHOTO, CROWD_TEL, CROWD_ZH, CROWD_SF
+  </sql>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+
+     select CROWD_ID, CROWD_NAME, CROWD_ZJ, CROWD_CJ, CROWD_TIME, CROWD_DC, CROWD_MS, CROWD_TT,
+    CROWD_XX, CROWD_FQ, CROWD_JS, CROWD_PHOTO, CROWD_TEL, CROWD_ZH, CROWD_SF from CROWD_FUNDING
+
+</select>
+  <select id="selectByExample" parameterType="com.qphone.pojo.CrowdExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from CROWD_FUNDING
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from CROWD_FUNDING
+    where CROWD_ID = #{crowdId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+    delete from CROWD_FUNDING
+    where CROWD_ID = #{crowdId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qphone.pojo.CrowdExample">
+    delete from CROWD_FUNDING
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qphone.pojo.Crowd">
+    insert into CROWD_FUNDING (CROWD_ID, CROWD_NAME, CROWD_ZJ, 
+      CROWD_CJ, CROWD_TIME, CROWD_DC, 
+      CROWD_MS, CROWD_TT, CROWD_XX, 
+      CROWD_FQ, CROWD_JS, CROWD_PHOTO, 
+      CROWD_TEL, CROWD_ZH, CROWD_SF
+      )
+    values (#{crowdId,jdbcType=DECIMAL}, #{crowdName,jdbcType=VARCHAR}, #{crowdZj,jdbcType=VARCHAR}, 
+      #{crowdCj,jdbcType=VARCHAR}, #{crowdTime,jdbcType=DATE}, #{crowdDc,jdbcType=VARCHAR}, 
+      #{crowdMs,jdbcType=VARCHAR}, #{crowdTt,jdbcType=VARCHAR}, #{crowdXx,jdbcType=VARCHAR}, 
+      #{crowdFq,jdbcType=VARCHAR}, #{crowdJs,jdbcType=VARCHAR}, #{crowdPhoto,jdbcType=VARCHAR}, 
+      #{crowdTel,jdbcType=VARCHAR}, #{crowdZh,jdbcType=VARCHAR}, #{crowdSf,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qphone.pojo.Crowd">
+    insert into CROWD_FUNDING
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="crowdId != null">
+        CROWD_ID,
+      </if>
+      <if test="crowdName != null">
+        CROWD_NAME,
+      </if>
+      <if test="crowdZj != null">
+        CROWD_ZJ,
+      </if>
+      <if test="crowdCj != null">
+        CROWD_CJ,
+      </if>
+      <if test="crowdTime != null">
+        CROWD_TIME,
+      </if>
+      <if test="crowdDc != null">
+        CROWD_DC,
+      </if>
+      <if test="crowdMs != null">
+        CROWD_MS,
+      </if>
+      <if test="crowdTt != null">
+        CROWD_TT,
+      </if>
+      <if test="crowdXx != null">
+        CROWD_XX,
+      </if>
+      <if test="crowdFq != null">
+        CROWD_FQ,
+      </if>
+      <if test="crowdJs != null">
+        CROWD_JS,
+      </if>
+      <if test="crowdPhoto != null">
+        CROWD_PHOTO,
+      </if>
+      <if test="crowdTel != null">
+        CROWD_TEL,
+      </if>
+      <if test="crowdZh != null">
+        CROWD_ZH,
+      </if>
+      <if test="crowdSf != null">
+        CROWD_SF,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="crowdId != null">
+        #{crowdId,jdbcType=DECIMAL},
+      </if>
+      <if test="crowdName != null">
+        #{crowdName,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdZj != null">
+        #{crowdZj,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdCj != null">
+        #{crowdCj,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdTime != null">
+        #{crowdTime,jdbcType=DATE},
+      </if>
+      <if test="crowdDc != null">
+        #{crowdDc,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdMs != null">
+        #{crowdMs,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdTt != null">
+        #{crowdTt,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdXx != null">
+        #{crowdXx,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdFq != null">
+        #{crowdFq,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdJs != null">
+        #{crowdJs,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdPhoto != null">
+        #{crowdPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdTel != null">
+        #{crowdTel,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdZh != null">
+        #{crowdZh,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdSf != null">
+        #{crowdSf,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qphone.pojo.CrowdExample" resultType="java.lang.Long">
+    select count(*) from CROWD_FUNDING
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update CROWD_FUNDING
+    <set>
+      <if test="record.crowdId != null">
+        CROWD_ID = #{record.crowdId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.crowdName != null">
+        CROWD_NAME = #{record.crowdName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crowdZj != null">
+        CROWD_ZJ = #{record.crowdZj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crowdCj != null">
+        CROWD_CJ = #{record.crowdCj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crowdTime != null">
+        CROWD_TIME = #{record.crowdTime,jdbcType=DATE},
+      </if>
+      <if test="record.crowdDc != null">
+        CROWD_DC = #{record.crowdDc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crowdMs != null">
+        CROWD_MS = #{record.crowdMs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crowdTt != null">
+        CROWD_TT = #{record.crowdTt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crowdXx != null">
+        CROWD_XX = #{record.crowdXx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crowdFq != null">
+        CROWD_FQ = #{record.crowdFq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crowdJs != null">
+        CROWD_JS = #{record.crowdJs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crowdPhoto != null">
+        CROWD_PHOTO = #{record.crowdPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crowdTel != null">
+        CROWD_TEL = #{record.crowdTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crowdZh != null">
+        CROWD_ZH = #{record.crowdZh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crowdSf != null">
+        CROWD_SF = #{record.crowdSf,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update CROWD_FUNDING
+    set CROWD_ID = #{record.crowdId,jdbcType=DECIMAL},
+      CROWD_NAME = #{record.crowdName,jdbcType=VARCHAR},
+      CROWD_ZJ = #{record.crowdZj,jdbcType=VARCHAR},
+      CROWD_CJ = #{record.crowdCj,jdbcType=VARCHAR},
+      CROWD_TIME = #{record.crowdTime,jdbcType=DATE},
+      CROWD_DC = #{record.crowdDc,jdbcType=VARCHAR},
+      CROWD_MS = #{record.crowdMs,jdbcType=VARCHAR},
+      CROWD_TT = #{record.crowdTt,jdbcType=VARCHAR},
+      CROWD_XX = #{record.crowdXx,jdbcType=VARCHAR},
+      CROWD_FQ = #{record.crowdFq,jdbcType=VARCHAR},
+      CROWD_JS = #{record.crowdJs,jdbcType=VARCHAR},
+      CROWD_PHOTO = #{record.crowdPhoto,jdbcType=VARCHAR},
+      CROWD_TEL = #{record.crowdTel,jdbcType=VARCHAR},
+      CROWD_ZH = #{record.crowdZh,jdbcType=VARCHAR},
+      CROWD_SF = #{record.crowdSf,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qphone.pojo.Crowd">
+    update CROWD_FUNDING
+    <set>
+      <if test="crowdName != null">
+        CROWD_NAME = #{crowdName,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdZj != null">
+        CROWD_ZJ = #{crowdZj,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdCj != null">
+        CROWD_CJ = #{crowdCj,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdTime != null">
+        CROWD_TIME = #{crowdTime,jdbcType=DATE},
+      </if>
+      <if test="crowdDc != null">
+        CROWD_DC = #{crowdDc,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdMs != null">
+        CROWD_MS = #{crowdMs,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdTt != null">
+        CROWD_TT = #{crowdTt,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdXx != null">
+        CROWD_XX = #{crowdXx,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdFq != null">
+        CROWD_FQ = #{crowdFq,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdJs != null">
+        CROWD_JS = #{crowdJs,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdPhoto != null">
+        CROWD_PHOTO = #{crowdPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdTel != null">
+        CROWD_TEL = #{crowdTel,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdZh != null">
+        CROWD_ZH = #{crowdZh,jdbcType=VARCHAR},
+      </if>
+      <if test="crowdSf != null">
+        CROWD_SF = #{crowdSf,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CROWD_ID = #{crowdId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qphone.pojo.Crowd">
+    update CROWD_FUNDING
+    set CROWD_NAME = #{crowdName,jdbcType=VARCHAR},
+      CROWD_ZJ = #{crowdZj,jdbcType=VARCHAR},
+      CROWD_CJ = #{crowdCj,jdbcType=VARCHAR},
+      CROWD_TIME = #{crowdTime,jdbcType=DATE},
+      CROWD_DC = #{crowdDc,jdbcType=VARCHAR},
+      CROWD_MS = #{crowdMs,jdbcType=VARCHAR},
+      CROWD_TT = #{crowdTt,jdbcType=VARCHAR},
+      CROWD_XX = #{crowdXx,jdbcType=VARCHAR},
+      CROWD_FQ = #{crowdFq,jdbcType=VARCHAR},
+      CROWD_JS = #{crowdJs,jdbcType=VARCHAR},
+      CROWD_PHOTO = #{crowdPhoto,jdbcType=VARCHAR},
+      CROWD_TEL = #{crowdTel,jdbcType=VARCHAR},
+      CROWD_ZH = #{crowdZh,jdbcType=VARCHAR},
+      CROWD_SF = #{crowdSf,jdbcType=VARCHAR}
+    where CROWD_ID = #{crowdId,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qphone.dao.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.qphone.pojo.Goods">
+    <id column="FOOD_ID" jdbcType="DECIMAL" property="foodId" />
+    <result column="FOOD_NAME" jdbcType="VARCHAR" property="foodName" />
+    <result column="FOOD_PRICE" jdbcType="VARCHAR" property="foodPrice" />
+    <result column="FOOD_DATE" jdbcType="DATE" property="foodDate" />
+    <result column="FOOD_ALLPRICE" jdbcType="VARCHAR" property="foodAllprice" />
+    <result column="FOOD_NUM" jdbcType="VARCHAR" property="foodNum" />
+  </resultMap>
+
+
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    FOOD_ID, FOOD_NAME, FOOD_PRICE, FOOD_DATE, FOOD_ALLPRICE, FOOD_NUM
+  </sql>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+       select FOOD_ID, FOOD_NAME, FOOD_PRICE, FOOD_DATE, FOOD_ALLPRICE, FOOD_NUM from FOOD
+
+  </select>
+
+
+
+
+
+  <select id="selectByExample" parameterType="com.qphone.pojo.GoodsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from FOOD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from FOOD
+    where FOOD_ID = #{foodId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+    delete from FOOD
+    where FOOD_ID = #{foodId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qphone.pojo.GoodsExample">
+    delete from FOOD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qphone.pojo.Goods">
+    insert into FOOD (FOOD_ID, FOOD_NAME, FOOD_PRICE, 
+      FOOD_DATE, FOOD_ALLPRICE, FOOD_NUM
+      )
+    values (#{foodId,jdbcType=DECIMAL}, #{foodName,jdbcType=VARCHAR}, #{foodPrice,jdbcType=VARCHAR}, 
+      #{foodDate,jdbcType=DATE}, #{foodAllprice,jdbcType=VARCHAR}, #{foodNum,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qphone.pojo.Goods">
+    insert into FOOD
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="foodId != null">
+        FOOD_ID,
+      </if>
+      <if test="foodName != null">
+        FOOD_NAME,
+      </if>
+      <if test="foodPrice != null">
+        FOOD_PRICE,
+      </if>
+      <if test="foodDate != null">
+        FOOD_DATE,
+      </if>
+      <if test="foodAllprice != null">
+        FOOD_ALLPRICE,
+      </if>
+      <if test="foodNum != null">
+        FOOD_NUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="foodId != null">
+        #{foodId,jdbcType=DECIMAL},
+      </if>
+      <if test="foodName != null">
+        #{foodName,jdbcType=VARCHAR},
+      </if>
+      <if test="foodPrice != null">
+        #{foodPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="foodDate != null">
+        #{foodDate,jdbcType=DATE},
+      </if>
+      <if test="foodAllprice != null">
+        #{foodAllprice,jdbcType=VARCHAR},
+      </if>
+      <if test="foodNum != null">
+        #{foodNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qphone.pojo.GoodsExample" resultType="java.lang.Long">
+    select count(*) from FOOD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update FOOD
+    <set>
+      <if test="record.foodId != null">
+        FOOD_ID = #{record.foodId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.foodName != null">
+        FOOD_NAME = #{record.foodName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.foodPrice != null">
+        FOOD_PRICE = #{record.foodPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.foodDate != null">
+        FOOD_DATE = #{record.foodDate,jdbcType=DATE},
+      </if>
+      <if test="record.foodAllprice != null">
+        FOOD_ALLPRICE = #{record.foodAllprice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.foodNum != null">
+        FOOD_NUM = #{record.foodNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update FOOD
+    set FOOD_ID = #{record.foodId,jdbcType=DECIMAL},
+      FOOD_NAME = #{record.foodName,jdbcType=VARCHAR},
+      FOOD_PRICE = #{record.foodPrice,jdbcType=VARCHAR},
+      FOOD_DATE = #{record.foodDate,jdbcType=DATE},
+      FOOD_ALLPRICE = #{record.foodAllprice,jdbcType=VARCHAR},
+      FOOD_NUM = #{record.foodNum,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qphone.pojo.Goods">
+    update FOOD
+    <set>
+      <if test="foodName != null">
+        FOOD_NAME = #{foodName,jdbcType=VARCHAR},
+      </if>
+      <if test="foodPrice != null">
+        FOOD_PRICE = #{foodPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="foodDate != null">
+        FOOD_DATE = #{foodDate,jdbcType=DATE},
+      </if>
+      <if test="foodAllprice != null">
+        FOOD_ALLPRICE = #{foodAllprice,jdbcType=VARCHAR},
+      </if>
+      <if test="foodNum != null">
+        FOOD_NUM = #{foodNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FOOD_ID = #{foodId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qphone.pojo.Goods">
+    update FOOD
+    set FOOD_NAME = #{foodName,jdbcType=VARCHAR},
+      FOOD_PRICE = #{foodPrice,jdbcType=VARCHAR},
+      FOOD_DATE = #{foodDate,jdbcType=DATE},
+      FOOD_ALLPRICE = #{foodAllprice,jdbcType=VARCHAR},
+      FOOD_NUM = #{foodNum,jdbcType=VARCHAR}
+    where FOOD_ID = #{foodId,jdbcType=DECIMAL}
+  </update>
+</mapper>

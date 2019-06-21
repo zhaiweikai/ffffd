@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.alibaba.com/schema/stat"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.alibaba.com/schema/stat http://www.alibaba.com/schema/stat.xsd">
+
+    <context:component-scan base-package="com.qphone.dao"></context:component-scan>
+    <context:component-scan base-package="com.qphone.service"></context:component-scan>
+
+    <context:property-placeholder   location="classpath:sql.properties"/>
+    <bean id="dataSoure" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${driver}"></property>
+        <property name="url" value="${url}"></property>
+        <property name="username" value="${user}"></property>
+        <property name="password" value="${pass}"></property>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSoure"></property>
+    </bean>
+      <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+         <property name="configLocation" value="classpath:mybatis.xml"></property>
+         <property name="mapperLocations">
+             <list>
+                 <value >classpath:com/qphone/mapper/*.xml</value>
+             </list>
+
+         </property>
+         <property name="dataSource" ref="dataSoure"></property>
+         <property name="plugins">
+    <array>
+    <bean class="com.github.pagehelper.PageInterceptor">
+        <property name="properties">
+            <!--使用下面的方式配置参数，一行配置一个 -->
+            <value>
+            </value>
+
+         </property>
+     </bean>
+    </array>
+         </property>
+     </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.qphone.dao"></property>
+    </bean>
+
+    <tx:annotation-driven/>
+    <!--  <tx:advice transaction-manager="transactionManager"></tx:advice>-->
+
+
+</beans>
